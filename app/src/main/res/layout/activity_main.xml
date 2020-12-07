@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/WHITE"
+    android:orientation="vertical">
+    <include
+        android:id="@+id/claims_toolbar"
+        layout="@layout/appbar_mainmenu" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/claims_toolbar"
+        android:weightSum="2"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:alpha="0.6"
+            android:visibility="visible"
+            android:background="@color/grey"/>
+
+        <FrameLayout
+            android:id="@+id/flContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.78"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <LinearLayout
+            android:id="@+id/search_ll_btm"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.22"
+            android:layout_below="@id/flContainer"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:elevation="0dp">
+
+
+            <LinearLayout
+                android:id="@+id/lyt_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:alpha="0.6"
+                    android:visibility="visible"
+                    android:background="@color/grey"/>
+
+                <TextView
+                    android:id="@+id/txt_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_weight="0.4"
+                    android:drawableTop="@drawable/ic_baseline_search_24"
+                    android:gravity="center"
+                    android:text="Search"
+                    android:textStyle="bold"
+                    android:textColor="@color/instacolcor"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_settled"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+
+                android:elevation="0dp"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:alpha="0.6"
+                    android:visibility="visible"
+                    android:background="@color/grey"/>
+                <TextView
+                    android:id="@+id/txt_history"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_weight="0.4"
+                    android:alpha="0.4"
+                    android:textStyle="bold"
+
+                    android:drawableTop="@drawable/ic_baseline_history_24"
+                    android:gravity="center"
+                    android:text="History"
+                    android:textColor="@color/instacolcor"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_psettled"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:elevation="0dp"
+                android:layout_gravity="bottom"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:alpha="0.6"
+                    android:visibility="visible"
+                    android:background="@color/grey"/>
+                <TextView
+                    android:id="@+id/txt_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_weight="0.4"
+                    android:alpha="0.4"
+
+                    android:drawableTop="@drawable/ic_baseline_save_24"
+                    android:gravity="center"
+                    android:text="Save"
+                    android:textStyle="bold"
+                    android:textColor="@color/instacolcor"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

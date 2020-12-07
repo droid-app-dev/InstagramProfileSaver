@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back_ui"
+    android:orientation="vertical"
+    >
+
+
+   <!-- <RelativeLayout
+        android:id="@+id/rl_two_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="70dp">
+
+
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginTop="-50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/rel_main"
+            android:layout_height="wrap_content">
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_one_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="220dp"
+                android:elevation="10dp"
+                app:cardBackgroundColor="#fcfcfc"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="10dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="true">
+
+
+                <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/ch_login_save_pass"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
+                        android:text="Remember me" />
+
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ilUserName"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="15dp">
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        &lt;!&ndash;<EditText
+                        android:id="@+id/et_login_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/login_edit_boredr"
+                        android:hint="Password"
+                        android:inputType="textPassword"
+                        android:padding="10dp" />&ndash;&gt;
+
+        <com.maksim88.passwordedittext.PasswordEditText
+            android:id="@+id/et_login_password"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="16dp"
+            android:background=""
+            android:drawableTint="#000000"
+            android:hint=""
+            android:inputType="textPassword"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textCursorDrawable=""
+            app:pet_nonMonospaceFont="true" />
+
+    </>
+
+    <EditText
+        android:id="@+id/et_login_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_edit_boredr"
+        android:hint="UserName"
+        android:inputType="text"
+        android:padding="10dp" />-->
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/app_ic"
+            app:civ_border_width="2dp"
+            android:layout_marginTop="-50dp"
+            android:layout_marginBottom="50dp"
+            android:foregroundGravity="center"
+            app:civ_border_color="#F4F2F2"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:textColorHint="@color/dialogBoxBackgroundColor"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/user_email"
+
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.maksim88.passwordedittext.PasswordEditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:drawableTint="@color/black"
+            android:hint="Passowrd"
+            android:inputType="textPassword"
+            android:padding="10dp"
+            android:singleLine="true"
+            app:pet_nonMonospaceFont="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Forget Password ?"
+            android:id="@+id/tv_passwordreset"
+            android:textColor="@color/white"
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:layout_marginRight="25dp"/>
+
+        <com.maksim88.passwordedittext.PasswordEditText
+            android:id="@+id/et_confirm_password"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:drawableTint="@color/black"
+            android:hint="Confirm Passowrd"
+            android:inputType="textPassword"
+            android:padding="10dp"
+            android:singleLine="true"
+            app:pet_nonMonospaceFont="true" />
+
+       <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/btn_custom"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="30dp"
+            android:layout_centerInParent="true"
+           android:visibility="gone"
+            android:textColor="@android:color/white"
+            android:text="Login"/>
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/btn_custom"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:textColor="@android:color/white"
+            android:text="Register"/>
+
+        <Button
+            android:id="@+id/btn_passwordreset"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/btn_custom"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:textColor="@android:color/white"
+            android:text="Send Link"/>
+
+        <TextView
+            android:id="@+id/tv_Login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:textColor="@color/dialogBoxBackgroundColor"
+            android:layout_gravity="start"
+            android:layout_marginLeft="22dp"
+            android:layout_below="@+id/rel_main"
+            android:textSize="15dp"
+            android:text="Already a member? Login"/>
+
+        <TextView
+            android:id="@+id/tv_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:gravity="center"
+            android:textColor="@color/dialogBoxBackgroundColor"
+            android:layout_gravity="bottom|center"
+            android:layout_below="@+id/rel_main"
+            android:textSize="15dp"
+            android:text="Version"/>
+
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/WHITE"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_below="@+id/claims_toolbar"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="3"
+        android:gravity="center">
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/rounded_border_edittext"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <EditText
+                android:id="@+id/insta_username"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_weight="0.7"
+                android:textSize="15dp"
+                android:maxLines="1"
+                android:inputType="text"
+                android:background="@android:color/transparent"
+                android:layout_gravity="center|start"
+                android:gravity="center|start"
+                android:layout_marginLeft="5dp"
+                android:hint="Type username or full name here">
+
+                <requestFocus />
+            </EditText>
+
+
+            <ImageView
+                android:id="@+id/search_clear"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center|right"
+                android:layout_marginRight="0dp"
+                android:layout_weight="0.15"
+                android:padding="5dp"
+                android:src="@drawable/ic_round_clear_24" />
+
+            <ImageView
+                android:id="@+id/imag_next"
+                android:layout_width="0dp"
+                android:padding="3dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center|end"
+                android:layout_weight="0.15"
+                android:src="@drawable/ic_icons8_google_web_search" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2.4"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:id="@+id/spin_kit"
+                style="@style/SpinKitView.Large.RotatingPlane"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                app:SpinKit_Color="@color/colorAccent" />
+
+
+            <ImageView
+                android:id="@+id/insta_profile"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginBottom="0dp"
+                android:layout_weight="0.85"
+                android:padding="0dp"
+                android:visibility="visible" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.15"
+                android:weightSum="2"
+                android:layout_gravity="start"
+                android:gravity="start"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="start"
+                    android:gravity="start"
+                    android:id="@+id/ll_downlod"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/downlod"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:src="@drawable/ic_downlod_img"
+                        android:padding="5dp"
+                        android:visibility="visible"
+                        android:text="save" />
+
+                    <TextView
+                        android:id="@+id/downlod_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="0dp"
+                        android:layout_gravity="start"
+                        android:gravity="center"
+                        android:text="download" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="end"
+                    android:gravity="end"
+                    android:id="@+id/ll_save"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/save"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="0dp"
+
+                        android:src="@drawable/save_empty"
+                        android:padding="5dp"
+                        android:visibility="visible"
+                        android:text="save" />
+
+                    <TextView
+                        android:id="@+id/Save_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:gravity="center"
+                        android:text="Save" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+</RelativeLayout>

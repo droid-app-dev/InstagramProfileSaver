@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="7dp">
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:weightSum="2"
+               android:orientation="horizontal">
+               <de.hdodenhof.circleimageview.CircleImageView
+                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                   android:id="@+id/profile_image"
+                   android:layout_width="0dp"
+                   android:layout_weight="0.5"
+                   android:layout_height="90dp"
+                   android:src="@drawable/app_ic"
+                   app:civ_border_width="2dp"
+                   android:layout_marginLeft="5dp"
+                   android:layout_marginBottom="5dp"
+                   android:layout_marginTop="5dp"
+                   android:foregroundGravity="center"
+                   app:civ_border_color="#F4F2F2"/>
+               <LinearLayout
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1.3"
+                   android:layout_gravity="center"
+                   android:layout_marginLeft="5dp"
+                   android:orientation="vertical">
+
+
+                       <TextView
+                           android:id="@+id/name_tv"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:text="Name"
+                           android:textSize="15dp"
+                           android:layout_marginTop="5dp"
+                           android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+                   <!--<TextView
+                       android:id="@+id/bio_tv"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:text="Bio"
+                       android:layout_marginTop="5dp"
+                       android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+-->
+
+                   <TextView
+                       android:id="@+id/username_tv"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:text="Username"
+                       android:textSize="15dp"
+                       android:layout_marginTop="5dp"
+                       android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="2"
+    android:layout_marginLeft="10dp"
+    android:layout_gravity="center"
+    android:orientation="horizontal">
+    <TextView
+        android:id="@+id/following_tv"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:text="following"
+        android:textSize="15dp"
+        android:layout_marginTop="5dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+    <TextView
+        android:id="@+id/followers_tv"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="followers"
+        android:textSize="15dp"
+
+        android:layout_marginTop="5dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+
+</LinearLayout>
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:weightSum="2"
+                       android:layout_gravity="center"
+                       android:gravity="center"
+                       android:orientation="horizontal">
+                       <TextView
+                           android:layout_width="0dp"
+                           android:layout_weight="1"
+                           android:layout_height="wrap_content"
+                           android:text="following"
+                           android:textSize="15dp"
+                           android:textColor="@color/black"
+                           android:textStyle="bold"
+                           android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+                       <TextView
+                           android:layout_width="0dp"
+                           android:layout_weight="1"
+                           android:layout_height="wrap_content"
+                           android:text="followers"
+                           android:textStyle="bold"
+                           android:textColor="@color/black"
+                           android:textSize="15dp"
+                           android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+
+                   </LinearLayout>
+
+
+
+
+
+               </LinearLayout>
+
+               <LinearLayout
+                   android:layout_width="0dp"
+                   android:layout_height="match_parent"
+                   android:layout_weight="0.2"
+                   android:weightSum="2"
+                   android:orientation="vertical">
+
+                   <ImageView
+                       android:layout_width="wrap_content"
+                       android:layout_height="0dp"
+                       android:layout_weight="0.5"
+                       android:padding="4dp"
+                       android:id="@+id/img_privacy"
+                       android:layout_gravity="center"
+                       android:src="@drawable/ic_unlock"/>
+
+
+
+                   <ImageView
+                       android:layout_width="wrap_content"
+                       android:layout_height="0dp"
+                       android:layout_weight="1"
+                       android:id="@+id/detailsarrow"
+                       android:layout_gravity="center"
+                       android:src="@drawable/ic_baseline_keyboard_arrow_right_24"/>
+
+
+               </LinearLayout>
+
+
+           </LinearLayout>
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
