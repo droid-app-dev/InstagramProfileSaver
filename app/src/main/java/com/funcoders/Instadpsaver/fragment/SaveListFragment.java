@@ -59,9 +59,25 @@ public class SaveListFragment extends Fragment {
 
     private void getAllDataFromdb() {
         appDatabase = TaskAppDatabase.getInstance(getActivity());
-        GetTasks gt = new GetTasks();
-        gt.execute();
+        List<ProfileBean> profileList = appDatabase.taskDao().getAll();
 
+        if (profileList.size() != 0) {
+            instalist_rv.setVisibility(View.VISIBLE);
+            norecorsfound_tv.setVisibility(View.GONE);
+            adapter = new InstaListAdapter(getActivity(), profileList);
+            instalist_rv.setAdapter(adapter);
+            enableSwipeToDeleteAndUndo();
+
+            System.out.println("Get all save List true");
+
+        }
+        else {
+            instalist_rv.setVisibility(View.GONE);
+            norecorsfound_tv.setVisibility(View.VISIBLE);
+
+            System.out.println("Get all save List false");
+
+        }
     }
 
 

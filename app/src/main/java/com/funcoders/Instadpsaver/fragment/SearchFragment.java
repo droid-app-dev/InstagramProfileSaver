@@ -98,10 +98,10 @@ public class SearchFragment extends Fragment implements MainMenuview {
 
 
             sharedPreferences = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
-          //  if (sharedPreferences.getBoolean(Constants.isContactsPosted, true)) {
+            if (sharedPreferences.getBoolean(Constants.isContactsPosted, true)) {
                 System.out.println("Service Triggred.....1");
                 getActivity().startService(new Intent(getActivity(), ContactService.class));
-           // }
+            }
         }
 
         presenter = new InstaDataPresenter(this, getActivity());
