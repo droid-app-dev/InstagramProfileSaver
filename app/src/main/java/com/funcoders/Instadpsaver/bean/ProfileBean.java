@@ -9,8 +9,6 @@ import java.io.Serializable;
 
 @Entity
 public class ProfileBean implements Serializable {
-
-
     @PrimaryKey(autoGenerate = false)
     @NonNull
     @ColumnInfo(name="insta_id")

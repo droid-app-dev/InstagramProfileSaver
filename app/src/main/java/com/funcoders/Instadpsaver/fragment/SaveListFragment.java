@@ -22,6 +22,8 @@ import com.funcoders.Instadpsaver.R;
 import com.funcoders.Instadpsaver.RoomDb.TaskAppDatabase;
 import com.funcoders.Instadpsaver.SwipeToDeleteCallback;
 import com.funcoders.Instadpsaver.bean.ProfileBean;
+import com.funcoders.Instadpsaver.common.AddUtils;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +54,10 @@ public class SaveListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         initUI(view);
+
+        AdView mAdView = (AdView) getView().findViewById(R.id.adView);
+        AddUtils.showGoogleBannerAd(getActivity(),mAdView);
+
         initRecyclerView(view);
         getAllDataFromdb();
 

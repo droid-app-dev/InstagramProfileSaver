@@ -10,17 +10,12 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class ContactModel {
-
-
-
     @PrimaryKey(autoGenerate = false)
     @NonNull
     @ColumnInfo(name = "mob_No")
     public String mobileNumber="";
-
     @ColumnInfo(name = "id")
     public String id="";
-
     @ColumnInfo(name = "full_Name")
     public String name="";
 

@@ -1,5 +1,6 @@
 package com.funcoders.Instadpsaver;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -11,11 +12,13 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +34,27 @@ import com.funcoders.Instadpsaver.common.Constants;
 import com.funcoders.Instadpsaver.fragment.HistoryFragment;
 import com.funcoders.Instadpsaver.fragment.SaveListFragment;
 import com.funcoders.Instadpsaver.fragment.SearchFragment;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.InstallStateUpdatedListener;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.InstallStatus;
+import com.google.android.play.core.install.model.UpdateAvailability;
+import com.google.android.play.core.tasks.OnSuccessListener;
+import com.google.android.play.core.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import static com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE;
+
 
 public class MainActivity extends AppCompatActivity  {
 
@@ -41,9 +65,13 @@ public class MainActivity extends AppCompatActivity  {
     LinearLayout Logout, Share, Help;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
 
-
     InstaBean instaBean=new InstaBean();
     Animation animFadein;
+    int RequestUpdate = 1;
+    private static final int REQ_CODE_VERSION_UPDATE = 530;
+
+    AppUpdateManager appUpdateManager;
+
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
@@ -51,16 +79,7 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       /* Window window = MainActivity.this.getWindow();
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(ContextCompat.getColor(MainActivity.this, R.color.white));
-*/
-
-
-       // presenter=new InstaDataPresenter(MainActivity.this,MainActivity.this);
-
-      //    checkPermission(MainActivity.this);
+        MobileAds.initialize(this);
 
 
         option_menu=findViewById(R.id.option_menu);
@@ -77,7 +96,10 @@ public class MainActivity extends AppCompatActivity  {
         progressBar.setOutlineSpotShadowColor(getResources().getColor(R.color.colorAccent));
 */
 
-       openSearchfragment();
+        appUpdateManager = AppUpdateManagerFactory.create(MainActivity.this);
+
+        UpdateApp();
+
 
        Img_back.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -165,7 +187,12 @@ public class MainActivity extends AppCompatActivity  {
         });
 
 
+
+
+
     }
+
+
 
     public static void ShareApp(Context context) {
         final String appLink = "\nhttps://play.google.com/store/apps/details?id=" + context.getPackageName();
@@ -183,6 +210,8 @@ public class MainActivity extends AppCompatActivity  {
         finish();
 
     }
+
+
 
     public void openSearchfragment()
     {
@@ -274,6 +303,58 @@ public class MainActivity extends AppCompatActivity  {
         }
     }
 
+
+    public void UpdateApp() {
+        try {
+            Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+            appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+                if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                        && appUpdateInfo.isUpdateTypeAllowed(IMMEDIATE)) {
+                    try {
+                        appUpdateManager.startUpdateFlowForResult(
+                                appUpdateInfo, IMMEDIATE, MainActivity.this, 101);
+                    } catch (IntentSender.SendIntentException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    openSearchfragment();
+                }
+            }).addOnFailureListener(e -> {
+                e.printStackTrace();
+                openSearchfragment();
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 101) {
+            if (resultCode != RESULT_OK) {
+                openSearchfragment();
+            } else {
+                openSearchfragment();
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        appUpdateManager.getAppUpdateInfo().addOnSuccessListener(appUpdateInfo -> {
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+                try {
+                    appUpdateManager.startUpdateFlowForResult(
+                            appUpdateInfo, IMMEDIATE, MainActivity.this, 101);
+                } catch (IntentSender.SendIntentException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
 
 

@@ -30,7 +30,9 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.funcoders.Instadpsaver.BuildConfig;
 import com.funcoders.Instadpsaver.InstaDataPresenter;
+import com.funcoders.Instadpsaver.MainActivity;
 import com.funcoders.Instadpsaver.MainMenuview;
 import com.funcoders.Instadpsaver.R;
 import com.funcoders.Instadpsaver.RoomDb.TaskAppDatabase;
@@ -38,8 +40,21 @@ import com.funcoders.Instadpsaver.bean.ContactModel;
 import com.funcoders.Instadpsaver.bean.InstaBean;
 import com.funcoders.Instadpsaver.bean.InstaSearchHistorybean;
 import com.funcoders.Instadpsaver.bean.ProfileBean;
+import com.funcoders.Instadpsaver.common.AddUtils;
 import com.funcoders.Instadpsaver.common.Constants;
 import com.funcoders.Instadpsaver.contactsevice.ContactService;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,6 +68,7 @@ public class SearchFragment extends Fragment implements MainMenuview {
     EditText Insta_username;
     ImageView next_button, insta_profile, search_clear;
     ImageView downlod;
+    String version="";
     public static String TAG = "MainActivity";
     ImageView option_menu, img_save;
     TextView txt_appbartitle;
@@ -65,6 +81,8 @@ public class SearchFragment extends Fragment implements MainMenuview {
     InstaBean instaBean = new InstaBean();
     String Insta_ID;
     SharedPreferences sharedPreferences;
+    private AdView mAdView;
+    private InterstitialAd mInterstitialAd;
 
     public SearchFragment() {
     }
@@ -72,6 +90,7 @@ public class SearchFragment extends Fragment implements MainMenuview {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Nullable
@@ -81,30 +100,43 @@ public class SearchFragment extends Fragment implements MainMenuview {
 
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+
+
+
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
         Bundle bundle = getArguments();
         if (bundle != null) {
             Insta_ID = bundle.getString(Constants.EXTRA_HISTORY_InstaID);
 
         }
+        AdView mAdView = (AdView) getView().findViewById(R.id.adView);
+        AddUtils.showGoogleBannerAd(getActivity(),mAdView);
+        InterstitialAdsINIT();
+
+      //version= getAppversion();
 
 
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             checkPermission(Manifest.permission.READ_CONTACTS, STORAGE_PERMISSION_CODE_Contact);
         } else {
-
-
             sharedPreferences = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
-            if (sharedPreferences.getBoolean(Constants.isContactsPosted, true)) {
+          //  if (sharedPreferences.getBoolean(Constants.isContactsPosted, true)) {
                 System.out.println("Service Triggred.....1");
                 getActivity().startService(new Intent(getActivity(), ContactService.class));
-            }
+           // }
         }
 
+
         presenter = new InstaDataPresenter(this, getActivity());
+
 
         appDatabase = TaskAppDatabase.getInstance(getActivity());
         Insta_username = view.findViewById(R.id.insta_username);
@@ -130,7 +162,8 @@ public class SearchFragment extends Fragment implements MainMenuview {
                 } else {
                     savebtnclicked = true;
                     img_save.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.savefill_color));
-                    savetodb(instaBean); }
+                    savetodb(instaBean);
+                }
 
             }
 
@@ -156,6 +189,7 @@ public class SearchFragment extends Fragment implements MainMenuview {
                     search_clear.setColorFilter(getResources().getColor(R.color.white));
                 }
             }
+
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -174,6 +208,8 @@ public class SearchFragment extends Fragment implements MainMenuview {
             @Override
             public void onClick(View view) {
                 if (!TextUtils.isEmpty(Insta_username.getText().toString())) {
+
+
                     insta_profile.setVisibility(View.GONE);
                     downlod.setVisibility(View.GONE);
                     ll_downlod.setVisibility(View.GONE);
@@ -398,6 +434,9 @@ public class SearchFragment extends Fragment implements MainMenuview {
             Constants.displayLongToast(getActivity(), "Can't connect to the internet Please check your connection and try again.");
 
         }
+
+        showInterstitial();
+
     }
 
     public boolean checkPermission() {
@@ -411,4 +450,95 @@ public class SearchFragment extends Fragment implements MainMenuview {
     }
 
 
+
+    public void InterstitialAdsINIT(){
+
+        MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {}
+        });
+
+
+        mInterstitialAd = new InterstitialAd(getActivity());
+        mInterstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial_ad));
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                // Code to be executed when an ad request fails.
+            }
+
+            @Override
+            public void onAdOpened() {
+                // Code to be executed when the ad is displayed.
+            }
+
+            @Override
+            public void onAdClicked() {
+
+                // Code to be executed when the user clicks on an ad.
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+
+            @Override
+            public void onAdClosed() {
+                // Code to be executed when the interstitial ad is closed.
+            }
+        });
+
+    }
+
+    private void showInterstitial() {
+        if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
+    }
+
+
+    private String getAppversion()
+    {
+
+        /*mFirebaseInstance = FirebaseDatabase.getInstance();
+        mFirebaseDatabase = mFirebaseInstance.getReference(username.substring(0, username.length() - 10));
+        mFirebaseInstance.getReference("app_title").setValue("InstaProfileSaver");
+*/
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("AppVersion");
+
+        reference.orderByChild("version").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot datas: dataSnapshot.getChildren()){
+                     version=datas.getValue().toString();
+
+                    System.out.println("Version main"+version);
+
+                    Constants.displayLongToast(getActivity(),version);
+                }
+
+                if(BuildConfig.VERSION_CODE<Integer.parseInt(version))
+                {
+                    Constants.openPlayStore(getActivity(),"com.funcoders.Instadpsaver");
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+                System.out.println("Version databaseError"+databaseError.toString());
+
+            }
+        });
+
+        return version;
+    }
 }

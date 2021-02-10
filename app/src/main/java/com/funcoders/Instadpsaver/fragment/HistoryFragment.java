@@ -16,8 +16,10 @@ import com.funcoders.Instadpsaver.HistoryAdapter;
 import com.funcoders.Instadpsaver.R;
 import com.funcoders.Instadpsaver.RoomDb.TaskAppDatabase;
 import com.funcoders.Instadpsaver.bean.InstaSearchHistorybean;
+import com.funcoders.Instadpsaver.common.AddUtils;
 import com.funcoders.Instadpsaver.common.Constants;
 import com.funcoders.Instadpsaver.common.DialogCallBack;
+import com.google.android.gms.ads.AdView;
 
 import java.util.List;
 
@@ -44,6 +46,8 @@ public class HistoryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         intiUI(view);
+        AdView mAdView = (AdView) getView().findViewById(R.id.adView);
+        AddUtils.showGoogleBannerAd(getActivity(),mAdView);
         initRecyclerview();
 
     }

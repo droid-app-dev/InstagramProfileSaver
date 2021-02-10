@@ -5,10 +5,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -17,8 +19,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.ContactsContract;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.widget.Toast;
 
 
@@ -27,10 +31,19 @@ import androidx.core.app.ActivityCompat;
 import com.funcoders.Instadpsaver.R;
 import com.funcoders.Instadpsaver.bean.ContactModel;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import static com.funcoders.Instadpsaver.MainActivity.TAG;
 
 public class Constants {
 
@@ -241,5 +254,124 @@ public class Constants {
             );
         }
     }
+
+    public static void openPlayStore(Activity context, String appPackageName) {
+        try {
+            try {
+                Intent intentNavPrevScreen = new Intent("android.intent.action.VIEW", Uri.parse("market://details?id=" + appPackageName));
+                intentNavPrevScreen.setFlags(67108864);
+                context.startActivity(intentNavPrevScreen);
+                context.finishAffinity();
+                System.exit(0);
+            } catch (ActivityNotFoundException var4) {
+                Intent intentNavPrevScreen = new Intent("android.intent.action.VIEW", Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName));
+                intentNavPrevScreen.setFlags(67108864);
+                context.startActivity(intentNavPrevScreen);
+                context.finishAffinity();
+                System.exit(0);
+            }
+        } catch (Exception var5) {
+            var5.printStackTrace();
+        }
+
+    }
+
+    private void logStatusToStorage(String data,Context mcontext,String username) {
+
+        File path = null, extraLogPath = null;
+
+        System.out.println("logStatusToStorage  "+data);
+        try {
+            if (ActivityCompat.checkSelfPermission(mcontext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                path = new File(Environment.getExternalStoragePublicDirectory("")+"/InstaProfileSaver",
+                        username+".txt");
+                if (!path.exists()) {
+                    try {
+                        path.createNewFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                try {
+                    if (path.exists()) {
+
+                        BufferedWriter writer = new BufferedWriter(new FileWriter(path.getAbsolutePath(), true));
+                        writer.write(data);
+                        writer.newLine();
+                        writer.close();
+                    }
+                } catch (Exception e) {
+                    //Log.e(TAG, "Log file error", e);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+    public static void createLogDirectory() {
+        String folder_main = "InstaProfileSaver";
+        File f = new File(Environment.getExternalStorageDirectory(), folder_main);
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+        String path = f.getAbsolutePath();
+        Log.d("Files", "Path: " + path);
+        File directory = new File(path);
+        File[] files = directory.listFiles();
+       // Log.d("Files", "Size: "+ files.length);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = null;
+        try {
+            date = dateFormat.parse(Constants.getCurrentDate());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, -6);
+        String yesterdayAsString = dateFormat.format(calendar.getTime());
+
+        String dtStart = yesterdayAsString;
+        Date dateCOMPARE = null;
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            dateCOMPARE  = format.parse(dtStart);
+            System.out.println(dateCOMPARE);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(files!=null) {
+            for (int i = 0; i < files.length; i++) {
+                Log.d("Files", "FileName:" + files[i].getName());
+                String dateFIle = files[i].getName();
+                dateFIle = dateFIle.replace(".txt", "");
+                SimpleDateFormat fileformat = new SimpleDateFormat("dd-MM-yyyy");
+                Date pastdate = null;
+                try {
+                    pastdate = format.parse(dateFIle);
+                    System.out.println(pastdate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if (pastdate.compareTo(dateCOMPARE) < 0) {
+                    files[i].delete();
+                }
+            }
+        }
+
+        String  dateAsFileName = Constants.getCurrentDate();
+        File dateFile = new File(Environment.getExternalStoragePublicDirectory("")+"/TrackerLogs",
+                dateAsFileName+".txt");
+        if (!dateFile.exists()) {
+            try {
+                dateFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 }
