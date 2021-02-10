@@ -1,6 +1,5 @@
 package com.funcoders.Instadpsaver;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -88,17 +87,10 @@ public class MainActivity extends AppCompatActivity  {
         txt_history=findViewById(R.id.txt_history);
         txt_save=findViewById(R.id.txt_save);
         Img_back=findViewById(R.id.imgBack);
-       // progressBar = (ProgressBar)findViewById(R.id.spin_kit);
-       // Sprite doubleBounce = new Circle();
-      //  progressBar.setIndeterminateDrawable(doubleBounce);
-      //  progressBar.setBackgroundColor(getResources().getColor(R.color.secondaryDarkColor));
-       /* progressBar.setOutlineAmbientShadowColor(getResources().getColor(R.color.colorPrimaryDark));
-        progressBar.setOutlineSpotShadowColor(getResources().getColor(R.color.colorAccent));
-*/
 
-        appUpdateManager = AppUpdateManagerFactory.create(MainActivity.this);
+         appUpdateManager = AppUpdateManagerFactory.create(MainActivity.this);
 
-        UpdateApp();
+          UpdateApp();
 
 
        Img_back.setOnClickListener(new View.OnClickListener() {
@@ -165,7 +157,8 @@ public class MainActivity extends AppCompatActivity  {
 
                 Share.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(View v)
+                    {
                         ShareApp(MainActivity.this);
                     }
                 });
@@ -173,23 +166,12 @@ public class MainActivity extends AppCompatActivity  {
                 Logout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        startActivity(new Intent(MainActivity.this,LoginActivity.class));
-
+                       // startActivity(new Intent(MainActivity.this,LoginActivity.class));
                         finish();
                     }
                 });
-
-
-
-
             }
         });
-
-
-
-
-
     }
 
 
@@ -216,17 +198,6 @@ public class MainActivity extends AppCompatActivity  {
     public void openSearchfragment()
     {
         Fragment searchFragment = new SearchFragment();
-        Bundle bundle = new Bundle();
-       /* bundle.putInt(Constants.EXTRA_COME_FROM, 1);
-        bundle.putString(Constants.EXTRA_CUSTOMER_NO, sharedPreferences.getString(Constants.KEY_CUSTOMER_NO, ""));
-        bundle.putString(Constants.EXTRA_CUSTOMER_NAME, sharedPreferences.getString(Constants.KEY_CUSTOMER_NAME, ""));
-        bundle.putBoolean(Constants.EXTRA_READ_FROM_TECH_CACHE, readFromTechCache);
-        bundle.putBoolean(Constants.LoginFlag, true);
-        bundle.putBoolean("isFromRegistration", isFromRegistration);
-//        if (fromLogin != null) {
-//            bundle.putString("coimgFromLogin",fromLogin);
-//        }
-        mainMenuFragment.setArguments(bundle);*/
         openFragment(searchFragment);
 
     }
@@ -235,57 +206,14 @@ public class MainActivity extends AppCompatActivity  {
     public void openHistoryFragment()
     {
         Fragment historyFragment = new HistoryFragment();
-        Bundle bundle = new Bundle();
-       /* bundle.putInt(Constants.EXTRA_COME_FROM, 1);
-        bundle.putString(Constants.EXTRA_CUSTOMER_NO, sharedPreferences.getString(Constants.KEY_CUSTOMER_NO, ""));
-        bundle.putString(Constants.EXTRA_CUSTOMER_NAME, sharedPreferences.getString(Constants.KEY_CUSTOMER_NAME, ""));
-        bundle.putBoolean(Constants.EXTRA_READ_FROM_TECH_CACHE, readFromTechCache);
-        bundle.putBoolean(Constants.LoginFlag, true);
-        bundle.putBoolean("isFromRegistration", isFromRegistration);
-//        if (fromLogin != null) {
-//            bundle.putString("coimgFromLogin",fromLogin);
-//        }
-        mainMenuFragment.setArguments(bundle);*/
         openFragment(historyFragment);
 
     } public void openSaveListFragment()
     {
         Fragment saveListFragment = new SaveListFragment();
-        Bundle bundle = new Bundle();
-       /* bundle.putInt(Constants.EXTRA_COME_FROM, 1);
-        bundle.putString(Constants.EXTRA_CUSTOMER_NO, sharedPreferences.getString(Constants.KEY_CUSTOMER_NO, ""));
-        bundle.putString(Constants.EXTRA_CUSTOMER_NAME, sharedPreferences.getString(Constants.KEY_CUSTOMER_NAME, ""));
-        bundle.putBoolean(Constants.EXTRA_READ_FROM_TECH_CACHE, readFromTechCache);
-        bundle.putBoolean(Constants.LoginFlag, true);
-        bundle.putBoolean("isFromRegistration", isFromRegistration);
-//        if (fromLogin != null) {
-//            bundle.putString("coimgFromLogin",fromLogin);
-//        }
-        mainMenuFragment.setArguments(bundle);*/
         openFragment(saveListFragment);
 
     }
-
-
-
-
-    public static void checkPermission(Activity activity) {
-        // Check if we have write permission
-        int storage = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        int contacts = ActivityCompat.checkSelfPermission(activity, Manifest.permission.READ_CONTACTS);
-       // int camera = ActivityCompat.checkSelfPermission(activity, Manifest.permission.CAMERA);
-
-        if (storage != PackageManager.PERMISSION_GRANTED || contacts != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(
-                    activity,
-                    Constants.PERMISSIONS_STORAGE,
-                    REQUEST_EXTERNAL_STORAGE
-            );
-        }
-    }
-
-
 
     public void openFragment(Fragment mainMenuFragment) {
         try {
@@ -293,7 +221,7 @@ public class MainActivity extends AppCompatActivity  {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.flContainer, mainMenuFragment, mainMenuFragment.getClass().getName());
-                //        fragmentTransaction.commit();
+                // fragmentTransaction.commit();
                 fragmentTransaction.commitAllowingStateLoss();
             } catch (IllegalStateException e) {
                 e.printStackTrace();

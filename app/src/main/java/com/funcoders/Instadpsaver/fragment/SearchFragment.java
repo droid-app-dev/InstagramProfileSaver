@@ -120,11 +120,8 @@ public class SearchFragment extends Fragment implements MainMenuview {
         AddUtils.showGoogleBannerAd(getActivity(),mAdView);
         InterstitialAdsINIT();
 
-      //version= getAppversion();
 
-
-
-            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             checkPermission(Manifest.permission.READ_CONTACTS, STORAGE_PERMISSION_CODE_Contact);
         } else {
             sharedPreferences = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
@@ -179,10 +176,8 @@ public class SearchFragment extends Fragment implements MainMenuview {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
                 if (count > 0) {
                     search_clear.setColorFilter(getResources().getColor(R.color.grey));
                 } else {

