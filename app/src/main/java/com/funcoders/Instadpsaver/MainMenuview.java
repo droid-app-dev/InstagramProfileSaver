@@ -10,6 +10,8 @@ public interface MainMenuview {
 
     void showProgressDialog();
     void hideProgressDialog();
+
+
     void displayIntaData(InstaBean bean);
     void displayImages(ArrayList<InstaBean> imgList);
     void displayVedio(ArrayList<InstaBean> vedioList);
